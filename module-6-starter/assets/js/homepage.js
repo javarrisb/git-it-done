@@ -89,4 +89,21 @@ var displayRepos = function (repos, searchTerm) {
     repoContainerEl.appendChild(repoEl);
   }
 };
+
+var getFeaturedRepos = function(language) {
+  var apiUrl = "https://api.github.com/search/repositories?q=" + language + "+is:featured&sort=help-wanted-issues";
+
+  fetch(apiUrl).then(function(response) {
+    if (response.ok) {
+      response.json().then(function(data) {
+        displayRepos(data.items, language);
+      });
+    } else {
+      alert('Error: GitHub User Not Found');
+    }
+  });
+
+};
+
+
 userFormEl.addEventListener("submit", formSubmitHandler);
